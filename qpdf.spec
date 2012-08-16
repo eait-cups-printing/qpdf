@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 3.0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: Artistic 2.0
 Group:   System Environment/Base
 URL:     http://qpdf.sourceforge.net/
@@ -34,7 +34,7 @@ Requires: qpdf-libs%{?_isa} = %{version}-%{release}
 Summary: QPDF Manual
 Group:   Documentation
 BuildArch: noarch
-Requires: qpdf-libs%{?_isa} = %{version}-%{release}
+Requires: qpdf-libs = %{version}-%{release}
 
 %description
 QPDF is a command-line program that does structural, content-preserving
@@ -102,6 +102,9 @@ make check
 %doc __doc/*
 
 %changelog
+* Thu Aug 16 2012 Jiri Popelka <jpopelka@redhat.com> 3.0.1-3
+- the previously added requirement doesn't need to be arch-specific
+
 * Thu Aug 16 2012 Jiri Popelka <jpopelka@redhat.com> 3.0.1-2
 - doc subpackage requires libs subpackage due to license file (#848466)
 

@@ -1,6 +1,6 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 3.0.2
+Version: 4.0.0
 Release: 1%{?dist}
 License: Artistic 2.0
 Group:   System Environment/Base
@@ -102,6 +102,9 @@ make check
 %doc __doc/*
 
 %changelog
+* Wed Jan 02 2013 Jiri Popelka <jpopelka@redhat.com> 4.0.0-1
+- 4.0.0
+
 * Fri Sep 07 2012 Jiri Popelka <jpopelka@redhat.com> 3.0.2-1
 - 3.0.2
 

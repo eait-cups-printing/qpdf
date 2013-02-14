@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 4.0.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: Artistic 2.0
 Group:   System Environment/Base
 URL:     http://qpdf.sourceforge.net/
@@ -102,6 +102,9 @@ make check
 %doc __doc/*
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.0.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Fri Jan 18 2013 Jiri Popelka <jpopelka@redhat.com> 4.0.1-1
 - 4.0.1
 

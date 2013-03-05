@@ -1,11 +1,14 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 4.0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: Artistic 2.0
 Group:   System Environment/Base
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
+
+Patch0:  qpdf-size_t.patch
+Patch1:  qpdf-compressed-object.patch
 
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
@@ -58,6 +61,11 @@ QPDF Manual
 %prep
 %setup -q
 
+# work around gcc 4.8.0 issue on ppc64 (#915321)
+%patch0 -p1 -b .size_t
+# properly handle overridden compressed objects
+%patch1 -p1 -b .compressed-object
+
 %build
 # work-around check-rpaths errors
 autoreconf --verbose --force --install
@@ -102,6 +110,10 @@ make check
 %doc __doc/*
 
 %changelog
+* Tue Mar 05 2013 Jiri Popelka <jpopelka@redhat.com> - 4.0.1-3
+- work around gcc 4.8.0 issue on ppc64 (#915321)
+- properly handle overridden compressed objects
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.0.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 

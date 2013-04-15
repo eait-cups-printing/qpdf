@@ -1,14 +1,11 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 4.0.1
-Release: 3%{?dist}
+Version: 4.1.0
+Release: 1%{?dist}
 License: Artistic 2.0
 Group:   System Environment/Base
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
-
-Patch0:  qpdf-size_t.patch
-Patch1:  qpdf-compressed-object.patch
 
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
@@ -61,11 +58,6 @@ QPDF Manual
 %prep
 %setup -q
 
-# work around gcc 4.8.0 issue on ppc64 (#915321)
-%patch0 -p1 -b .size_t
-# properly handle overridden compressed objects
-%patch1 -p1 -b .compressed-object
-
 %build
 # work-around check-rpaths errors
 autoreconf --verbose --force --install
@@ -82,6 +74,8 @@ make install DESTDIR=%{buildroot}
 mkdir __doc
 mv  %{buildroot}%{_datadir}/doc/qpdf/* __doc
 rm -rf %{buildroot}%{_datadir}/doc/qpdf
+
+rm -f %{buildroot}%{_libdir}/libqpdf.la
 
 %check
 make check
@@ -110,6 +104,9 @@ make check
 %doc __doc/*
 
 %changelog
+* Mon Apr 15 2013 Jiri Popelka <jpopelka@redhat.com> - 4.1.0-1
+- 4.1.0
+
 * Tue Mar 05 2013 Jiri Popelka <jpopelka@redhat.com> - 4.0.1-3
 - work around gcc 4.8.0 issue on ppc64 (#915321)
 - properly handle overridden compressed objects

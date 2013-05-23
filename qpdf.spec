@@ -1,12 +1,14 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 4.1.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0 and MIT
 Group:   System Environment/Base
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
+
+Patch0:  qpdf-doc.patch
 
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
@@ -59,6 +61,9 @@ QPDF Manual
 %prep
 %setup -q
 
+# fix 'complete manual location' note in man pages
+%patch0 -p1 -b .doc
+
 %build
 # work-around check-rpaths errors
 autoreconf --verbose --force --install
@@ -105,6 +110,9 @@ make check
 %doc __doc/*
 
 %changelog
+* Thu May 23 2013 Jiri Popelka <jpopelka@redhat.com> - 4.1.0-3
+- fix 'complete manual location' note in man pages (#966534)
+
 * Tue May 07 2013 Jiri Popelka <jpopelka@redhat.com> - 4.1.0-2
 - some source files are under MIT license
 

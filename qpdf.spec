@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 4.1.0
-Release: 3%{?dist}
+Version: 4.2.0
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0 and MIT
 Group:   System Environment/Base
@@ -110,6 +110,9 @@ make check
 %doc __doc/*
 
 %changelog
+* Mon Jul 08 2013 Jiri Popelka <jpopelka@redhat.com> - 4.2.0-1
+- 4.2.0
+
 * Thu May 23 2013 Jiri Popelka <jpopelka@redhat.com> - 4.1.0-3
 - fix 'complete manual location' note in man pages (#966534)
 

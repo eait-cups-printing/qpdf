@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 5.0.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0 and MIT
 Group:   System Environment/Base
@@ -112,6 +112,9 @@ make check
 %doc __doc/*
 
 %changelog
+* Sat Aug 03 2013 Petr Pisar <ppisar@redhat.com> - 5.0.0-4
+- Perl 5.18 rebuild
+
 * Mon Jul 22 2013 Jiri Popelka <jpopelka@redhat.com> - 5.0.0-3
 - change shebang to absolute path (#987040)
 

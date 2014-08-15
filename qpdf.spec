@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 5.1.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0 and MIT
 URL:     http://qpdf.sourceforge.net/
@@ -77,11 +77,6 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 
-# https://fedoraproject.org/wiki/Packaging_tricks#With_.25doc
-mkdir __doc
-mv  %{buildroot}%{_datadir}/doc/qpdf/* __doc
-rm -rf %{buildroot}%{_datadir}/doc/qpdf
-
 rm -f %{buildroot}%{_libdir}/libqpdf.la
 
 %check
@@ -108,9 +103,13 @@ make check
 %{_libdir}/pkgconfig/libqpdf.pc
 
 %files doc
-%doc __doc/*
+%{_defaultdocdir}/qpdf
+
 
 %changelog
+* Fri Aug 15 2014 Jiri Popelka <jpopelka@redhat.com> - 5.1.2-2
+- Use %%_defaultdocdir instead of %%doc
+
 * Mon Jun 09 2014 Jiri Popelka <jpopelka@redhat.com> - 5.1.2-1
 - 5.1.2
 

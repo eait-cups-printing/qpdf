@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 5.1.3
-Release: 2%{?dist}
+Version: 5.2.0
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0 and MIT
 URL:     http://qpdf.sourceforge.net/
@@ -107,6 +107,9 @@ make check
 
 
 %changelog
+* Mon Nov 09 2015 Jiri Popelka <jpopelka@redhat.com> - 5.2.0-1
+- 5.2.0
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 

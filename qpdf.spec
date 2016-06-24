@@ -14,6 +14,7 @@ BuildRequires: pcre-devel
 
 # for fix-qdf and test suite
 BuildRequires: perl
+BuildRequires: perl-generators
 BuildRequires: perl(Digest::MD5)
 
 # for autoreconf

@@ -13,7 +13,7 @@ BuildRequires: zlib-devel
 BuildRequires: pcre-devel
 
 # for fix-qdf and test suite
-BuildRequires: perl
+BuildRequires: perl-interpreter
 BuildRequires: perl-generators
 BuildRequires: perl(Digest::MD5)
 

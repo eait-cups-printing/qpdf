@@ -9,6 +9,7 @@ Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.g
 
 Patch0:  qpdf-doc.patch
 Patch1:  qpdf-6.0.0-detect-recursions.patch
+Patch2:  qpdf-6.0.0-CVE-2017-9208.patch
 
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
@@ -65,6 +66,7 @@ QPDF Manual
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
 %patch1 -p1 -b .detect-recursions
+%patch2 -p1 -b .CVE-2017-9208
 
 sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 
@@ -112,6 +114,7 @@ make check
 %changelog
 * Thu Aug 03 2017 Zdenek Dohnal <zdohnal@redhat.com> - 6.0.0-4
 - 1477213 - Detect recursions loop resolving objects
+- 1454820 - CVE-2017-9208
 
 * Wed Aug 03 2016 Jiri Popelka <jpopelka@redhat.com> - 6.0.0-3
 - %%{_defaultdocdir}/qpdf/ -> %%{_pkgdocdir}

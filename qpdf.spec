@@ -11,6 +11,7 @@ Patch0:  qpdf-doc.patch
 Patch1:  qpdf-6.0.0-detect-recursions.patch
 Patch2:  qpdf-6.0.0-CVE-2017-9208.patch
 Patch3:  qpdf-6.0.0-CVE-2017-9209.patch
+Patch4:  qpdf-6.0.0-CVE-2017-9210.patch
 
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
@@ -69,6 +70,7 @@ QPDF Manual
 %patch1 -p1 -b .detect-recursions
 %patch2 -p1 -b .CVE-2017-9208
 %patch3 -p1 -b .CVE-2017-9209
+%patch4 -p1 -b .CVE-2017-9210
 
 sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 
@@ -118,6 +120,7 @@ make check
 - 1477213 - Detect recursions loop resolving objects
 - 1454820 - CVE-2017-9208
 - 1454820 - CVE-2017-9209
+- 1454820 - CVE-2017-9210
 
 * Wed Aug 03 2016 Jiri Popelka <jpopelka@redhat.com> - 6.0.0-3
 - %%{_defaultdocdir}/qpdf/ -> %%{_pkgdocdir}

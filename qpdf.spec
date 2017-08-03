@@ -1,13 +1,14 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 6.0.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0 and MIT
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
 Patch0:  qpdf-doc.patch
+Patch1:  qpdf-6.0.0-detect-recursions.patch
 
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
@@ -63,6 +64,7 @@ QPDF Manual
 
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
+%patch1 -p1 -b .detect-recursions
 
 sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 
@@ -108,6 +110,9 @@ make check
 
 
 %changelog
+* Thu Aug 03 2017 Zdenek Dohnal <zdohnal@redhat.com> - 6.0.0-4
+- 1477213 - Detect recursions loop resolving objects
+
 * Wed Aug 03 2016 Jiri Popelka <jpopelka@redhat.com> - 6.0.0-3
 - %%{_defaultdocdir}/qpdf/ -> %%{_pkgdocdir}
 

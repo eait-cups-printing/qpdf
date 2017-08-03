@@ -1,13 +1,17 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 6.0.0
-Release: 7%{?dist}
+Release: 8%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0 and MIT
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
 Patch0:  qpdf-doc.patch
+Patch1:  qpdf-6.0.0-detect-recursions.patch
+Patch2:  qpdf-6.0.0-CVE-2017-9208.patch
+Patch3:  qpdf-6.0.0-CVE-2017-9209.patch
+Patch4:  qpdf-6.0.0-CVE-2017-9210.patch
 
 BuildRequires: zlib-devel
 BuildRequires: pcre-devel
@@ -63,6 +67,10 @@ QPDF Manual
 
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
+%patch1 -p1 -b .detect-recursions
+%patch2 -p1 -b .CVE-2017-9208
+%patch3 -p1 -b .CVE-2017-9209
+%patch4 -p1 -b .CVE-2017-9210
 
 sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 
@@ -108,6 +116,12 @@ make check
 
 
 %changelog
+* Thu Aug 03 2017 Zdenek Dohnal <zdohnal@redhat.com> - 6.0.0-8
+- 1477213 - Detect recursions loop resolving objects
+- 1454820 - CVE-2017-9208
+- 1454820 - CVE-2017-9209
+- 1454820 - CVE-2017-9210
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 6.0.0-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 

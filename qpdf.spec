@@ -1,19 +1,16 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 6.0.0
-Release: 10%{?dist}
+Version: 7.0.0
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
-License: Artistic 2.0 and MIT
+License: Artistic 2.0
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
 Patch0:  qpdf-doc.patch
-Patch1:  qpdf-detect-recursions.patch
-Patch2:  qpdf-CVE-2017-9208.patch
-Patch3:  qpdf-CVE-2017-9209.patch
-Patch4:  qpdf-CVE-2017-9210.patch
 
 BuildRequires: zlib-devel
+BuildRequires: libjpeg-turbo-devel
 BuildRequires: pcre-devel
 
 # for fix-qdf and test suite
@@ -67,14 +64,6 @@ QPDF Manual
 
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
-# 1477213 - Detect recursions loop resolving objects 
-%patch1 -p1 -b .detect-recursions
-# 1454815 - (CVE-2017-9208) CVE-2017-9208 qpdf: Infinite loop related to releaseResolved functions
-%patch2 -p1 -b .CVE-2017-9208
-# 1454816 - (CVE-2017-9209) CVE-2017-9209 qpdf: Infinite loop related to QPDFObjectHandle::parseInternal
-%patch3 -p1 -b .CVE-2017-9209
-# 1454819 - (CVE-2017-9210) CVE-2017-9210 qpdf: Infinite loop related to unparse functions
-%patch4 -p1 -b .CVE-2017-9210
 
 sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 
@@ -106,7 +95,7 @@ make check
 %{_mandir}/man1/*
 
 %files libs
-%doc README TODO ChangeLog Artistic-2.0
+%doc README.md TODO ChangeLog Artistic-2.0
 %{_libdir}/libqpdf*.so.*
 
 %files devel
@@ -120,6 +109,9 @@ make check
 
 
 %changelog
+* Tue Sep 19 2017 Zdenek Dohnal <zdohnal@redhat.com> - 7.0.0-1
+- rebase to 7.0.0
+
 * Fri Aug 11 2017 Zdenek Dohnal <zdohnal@redhat.com> - 6.0.0-10
 - adding patches for CVE back (cups-filters needed to rebuild)
 

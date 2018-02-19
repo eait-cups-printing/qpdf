@@ -1,13 +1,19 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 7.1.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
 Patch0:  qpdf-doc.patch
+
+# gcc and gcc-c++ are no longer in buildroot by default
+# gcc is needed for qpdf-ctest.c
+BuildRequires: gcc
+# gcc-c++ is need for everything except for qpdf-ctest
+BuildRequires: gcc-c++
 
 BuildRequires: zlib-devel
 BuildRequires: libjpeg-turbo-devel
@@ -106,6 +112,9 @@ make check
 
 
 %changelog
+* Mon Feb 19 2018 Zdenek Dohnal <zdohnal@redhat.com> - 7.1.1-4
+- gcc and gcc-c++ are no longer in buildroot by default
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 7.1.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 

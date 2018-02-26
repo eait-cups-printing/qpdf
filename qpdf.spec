@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 7.1.1
-Release: 4%{?dist}
+Version: 8.0.0
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0
 URL:     http://qpdf.sourceforge.net/
@@ -112,6 +112,9 @@ make check
 
 
 %changelog
+* Mon Feb 26 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.0.0-1
+- rebase to 8.0.0
+
 * Mon Feb 19 2018 Zdenek Dohnal <zdohnal@redhat.com> - 7.1.1-4
 - gcc and gcc-c++ are no longer in buildroot by default
 

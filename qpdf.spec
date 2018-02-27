@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 8.0.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0
 URL:     http://qpdf.sourceforge.net/
@@ -29,19 +29,19 @@ BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libtool
 
-Requires: qpdf-libs%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %package libs
 Summary: QPDF library for transforming PDF files
 
 %package devel
 Summary: Development files for QPDF library
-Requires: qpdf-libs%{?_isa} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %package doc
 Summary: QPDF Manual
 BuildArch: noarch
-Requires: qpdf-libs = %{version}-%{release}
+Requires: %{name}-libs = %{version}-%{release}
 
 %description
 QPDF is a command-line program that does structural, content-preserving
@@ -77,19 +77,17 @@ autoreconf --verbose --force --install
 %configure --disable-static \
            --enable-show-failed-test-output
 
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=%{buildroot}
+%make_install
 
 rm -f %{buildroot}%{_libdir}/libqpdf.la
 
 %check
 make check
 
-%post libs -p /sbin/ldconfig
-
-%postun libs -p /sbin/ldconfig
+%ldconfig_scriptlets libs
 
 %files
 %{_bindir}/fix-qdf
@@ -98,13 +96,14 @@ make check
 %{_mandir}/man1/*
 
 %files libs
-%doc README.md TODO ChangeLog Artistic-2.0
-%{_libdir}/libqpdf*.so.*
+%doc README.md TODO ChangeLog
+%license Artistic-2.0
+%{_libdir}/libqpdf.so.21*
 
 %files devel
 %doc examples/*.cc examples/*.c
-%{_includedir}/*
-%{_libdir}/libqpdf*.so
+%{_includedir}/qpdf/
+%{_libdir}/libqpdf.so
 %{_libdir}/pkgconfig/libqpdf.pc
 
 %files doc
@@ -112,6 +111,10 @@ make check
 
 
 %changelog
+* Tue Feb 27 2018 Rex Dieter <rdieter@fedoraproject.org> - 8.0.0-2
+- use %%license, %%ldconfig_scriptlets, %%make_build, %%make_install
+- %%files: track files more closely, libqpdf soname in particular
+
 * Mon Feb 26 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.0.0-1
 - rebase to 8.0.0
 

@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 8.0.0
-Release: 2%{?dist}
+Version: 8.0.1
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0
 URL:     http://qpdf.sourceforge.net/
@@ -98,7 +98,8 @@ make check
 %files libs
 %doc README.md TODO ChangeLog
 %license Artistic-2.0
-%{_libdir}/libqpdf.so.21*
+%{_libdir}/libqpdf.so.21
+%{_libdir}/libqpdf.so.21.0.1
 
 %files devel
 %doc examples/*.cc examples/*.c
@@ -111,6 +112,9 @@ make check
 
 
 %changelog
+* Mon Mar 05 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.0.1-1
+- 8.0.1
+
 * Tue Feb 27 2018 Rex Dieter <rdieter@fedoraproject.org> - 8.0.0-2
 - use %%license, %%ldconfig_scriptlets, %%make_build, %%make_install
 - %%files: track files more closely, libqpdf soname in particular

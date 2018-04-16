@@ -1,13 +1,14 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 8.0.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
 Patch0:  qpdf-doc.patch
+Patch1:  qpdf-CVE-2018-9918.patch
 
 # gcc and gcc-c++ are no longer in buildroot by default
 # gcc is needed for qpdf-ctest.c
@@ -67,6 +68,8 @@ QPDF Manual
 
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
+#  CVE-2018-9918 qpdf: stack exhaustion in QPDFObjectHandle and QPDF_Dictionary classes in libqpdf.a [fedora-all]
+%patch1 -p1 -b .CVE-2018-9918
 
 sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 
@@ -112,6 +115,9 @@ make check
 
 
 %changelog
+* Mon Apr 16 2018 Zdenek Dohnal <zdohnal@redhat.com>
+- CVE-2018-9918 qpdf: stack exhaustion in QPDFObjectHandle and QPDF_Dictionary classes in libqpdf.a [fedora-all] 
+
 * Wed Mar 07 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.0.2-1
 - 8.0.2
 

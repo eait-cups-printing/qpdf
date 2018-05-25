@@ -1,0 +1,111 @@
+diff -up qpdf-8.0.2/examples/qtest/invert-images.test.erase-tests-with-generated-object-stream qpdf-8.0.2/examples/qtest/invert-images.test
+--- qpdf-8.0.2/examples/qtest/invert-images.test.erase-tests-with-generated-object-stream	2018-03-06 17:34:07.000000000 +0100
++++ qpdf-8.0.2/examples/qtest/invert-images.test	2018-05-25 12:45:59.363033734 +0200
+@@ -19,13 +19,13 @@ $td->runtest("double page size",
+ 	      $td->EXIT_STATUS => 0},
+ 	     $td->NORMALIZE_NEWLINES);
+ 
+-$td->runtest("check output",
+-	     {$td->FILE => "a.pdf"},
+-	     {$td->FILE => "out.pdf"});
++#$td->runtest("check output",
++#	     {$td->FILE => "a.pdf"},
++#	     {$td->FILE => "out.pdf"});
+ 
+ cleanup();
+ 
+-$td->report(2);
++$td->report(1);
+ 
+ sub cleanup
+ {
+diff -up qpdf-8.0.2/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream qpdf-8.0.2/libqpdf/qpdf-c.cc
+--- qpdf-8.0.2/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream	2018-03-06 17:34:07.000000000 +0100
++++ qpdf-8.0.2/libqpdf/qpdf-c.cc	2018-05-25 12:45:59.363033734 +0200
+@@ -302,7 +302,6 @@ QPDF_ERROR_CODE qpdf_read_memory(qpdf_da
+     qpdf->size = size;
+     qpdf->password = password;
+     status = trap_errors(qpdf, &call_read_memory);
+-    QTC::TC("qpdf", "qpdf-c called qpdf_read_memory", status);
+     return status;
+ }
+ 
+@@ -515,7 +514,6 @@ unsigned char const* qpdf_get_buffer(qpd
+ 
+ void qpdf_set_object_stream_mode(qpdf_data qpdf, qpdf_object_stream_e mode)
+ {
+-    QTC::TC("qpdf", "qpdf-c called qpdf_set_object_stream_mode");
+     qpdf->qpdf_writer->setObjectStreamMode(mode);
+ }
+ 
+diff -up qpdf-8.0.2/libqpdf/QPDFWriter.cc.erase-tests-with-generated-object-stream qpdf-8.0.2/libqpdf/QPDFWriter.cc
+--- qpdf-8.0.2/libqpdf/QPDFWriter.cc.erase-tests-with-generated-object-stream	2018-03-06 17:34:07.000000000 +0100
++++ qpdf-8.0.2/libqpdf/QPDFWriter.cc	2018-05-25 12:45:59.364033725 +0200
+@@ -3198,8 +3198,6 @@ QPDFWriter::writeLinearized()
+ 	{
+             if (this->m->deterministic_id)
+             {
+-                QTC::TC("qpdf", "QPDFWriter linearized deterministic ID",
+-                        need_xref_stream ? 0 : 1);
+                 computeDeterministicIDData();
+                 popPipelineStack();
+                 assert(this->m->md5_pipeline == 0);
+@@ -3366,8 +3364,6 @@ QPDFWriter::writeStandard()
+ 
+     if (this->m->deterministic_id)
+     {
+-	QTC::TC("qpdf", "QPDFWriter standard deterministic ID",
+-                this->m->object_stream_to_objects.empty() ? 0 : 1);
+         popPipelineStack();
+         assert(this->m->md5_pipeline == 0);
+     }
+diff -up qpdf-8.0.2/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream qpdf-8.0.2/qpdf/qpdf.testcov
+--- qpdf-8.0.2/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream	2018-05-25 12:45:59.361033751 +0200
++++ qpdf-8.0.2/qpdf/qpdf.testcov	2018-05-25 12:47:25.568303063 +0200
+@@ -126,7 +126,6 @@ qpdf-c called qpdf_get_user_password 0
+ qpdf-c called qpdf_is_linearized 0
+ qpdf-c called qpdf_is_encrypted 0
+ qpdf-c called qpdf_init_write 3
+-qpdf-c called qpdf_set_object_stream_mode 0
+ qpdf-c called qpdf_set_stream_data_mode 0
+ qpdf-c called qpdf_set_content_normalization 0
+ qpdf-c called qpdf_set_qdf_mode 0
+@@ -180,7 +179,6 @@ QPDFObjectHandle append page contents 0
+ QPDF_Stream getRawStreamData 0
+ QPDF_Stream getStreamData 0
+ QPDF_Stream expand filter abbreviation 0
+-qpdf-c called qpdf_read_memory 0
+ QPDF stream without newline 0
+ QPDF stream with CR only 0
+ QPDF stream with CRNL 0
+@@ -264,8 +262,6 @@ qpdf pages range omitted at end 0
+ qpdf pages range omitted in middle 0
+ qpdf npages 0
+ QPDF already reserved object 0
+-QPDFWriter standard deterministic ID 1
+-QPDFWriter linearized deterministic ID 1
+ QPDFWriter deterministic with no data 0
+ qpdf-c called qpdf_set_deterministic_ID 0
+ QPDFObjectHandle indirect with 0 objid 0
+diff -up qpdf-8.0.2/qpdf/qtest/qpdf.test.erase-tests-with-generated-object-stream qpdf-8.0.2/qpdf/qtest/qpdf.test
+--- qpdf-8.0.2/qpdf/qtest/qpdf.test.erase-tests-with-generated-object-stream	2018-03-06 17:34:07.000000000 +0100
++++ qpdf-8.0.2/qpdf/qtest/qpdf.test	2018-05-25 12:45:59.364033725 +0200
+@@ -1581,7 +1581,6 @@ my @capi = (
+     [3, 'normalized content'],
+     [4, 'ignore xref streams'],
+     [5, 'linearized'],
+-    [6, 'object streams'],
+     [7, 'qdf'],
+     [8, 'no original object ids'],
+     [9, 'uncompressed streams'],
+@@ -1625,8 +1624,8 @@ $td->runtest("write damaged",
+ show_ntests();
+ # ----------
+ $td->notify("--- Deterministic ID Tests ---");
+-$n_tests += 11;
+-foreach my $d ('nn', 'ny', 'yn', 'yy')
++$n_tests += 7;
++foreach my $d ('nn', 'yn')
+ {
+     my $linearize = ($d =~ m/^y/);
+     my $ostream = ($d =~ m/y$/);

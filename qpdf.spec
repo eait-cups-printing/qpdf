@@ -1,14 +1,13 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 8.0.2
-Release: 3%{?dist}
+Version: 8.1.0
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 License: Artistic 2.0
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
 Patch0:  qpdf-doc.patch
-Patch1:  qpdf-CVE-2018-9918.patch
 # zlib has optimalization for aarch64 now, which gives different output after
 # compression - patch erases 3 tests with generated object stream which were failing
 Patch2:  qpdf-erase-tests-with-generated-object-stream.patch
@@ -71,8 +70,6 @@ QPDF Manual
 
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
-#  CVE-2018-9918 qpdf: stack exhaustion in QPDFObjectHandle and QPDF_Dictionary classes in libqpdf.a [fedora-all]
-%patch1 -p1 -b .CVE-2018-9918
 %ifarch aarch64
 %patch2 -p1 -b .erase-tests-with-generated-object-stream
 %endif
@@ -108,7 +105,7 @@ make check
 %doc README.md TODO ChangeLog
 %license Artistic-2.0
 %{_libdir}/libqpdf.so.21
-%{_libdir}/libqpdf.so.21.0.2
+%{_libdir}/libqpdf.so.21.1.0
 
 %files devel
 %doc examples/*.cc examples/*.c
@@ -121,6 +118,9 @@ make check
 
 
 %changelog
+* Mon Jun 25 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.1.0-1
+- 8.1.0
+
 * Fri May 25 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.0.2-3
 - erase failing tests for aarch64 because of zlib optimization
 

@@ -120,6 +120,7 @@ make check
 %changelog
 * Mon Jun 25 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.1.0-1
 - 8.1.0
+- more tests fail because aarch64 zlib optimization
 
 * Fri May 25 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.0.2-3
 - erase failing tests for aarch64 because of zlib optimization

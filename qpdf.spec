@@ -1,6 +1,6 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 8.2.1
+Version: 8.3.0
 Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
@@ -81,6 +81,9 @@ sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 %build
 # work-around check-rpaths errors
 autoreconf --verbose --force --install
+# automake files needed to be regenerated in 8.3.0 - check if this can be removed
+# in the next qpdf release
+./autogen.sh
 
 %configure --disable-static \
            --enable-show-failed-test-output
@@ -107,7 +110,7 @@ make check
 %doc README.md TODO ChangeLog
 %license Artistic-2.0
 %{_libdir}/libqpdf.so.21
-%{_libdir}/libqpdf.so.21.2.1
+%{_libdir}/libqpdf.so.21.3.0
 
 %files devel
 %doc examples/*.cc examples/*.c
@@ -120,6 +123,9 @@ make check
 
 
 %changelog
+* Mon Jan 14 2019 Zdenek Dohnal <zdohnal@redhat.com> - 8.3.0-1
+- 8.3.0
+
 * Mon Sep 24 2018 Zdenek Dohnal <zdohnal@redhat.com> - 8.2.1-1
 - 8.2.1
 

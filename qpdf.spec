@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 8.4.2
-Release: 2%{?dist}
+Version: 9.1.0
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -13,6 +13,8 @@ Patch0:  qpdf-doc.patch
 # zlib has optimalization for aarch64 now, which gives different output after
 # compression - patch erases 3 tests with generated object stream which were failing
 Patch2:  qpdf-erase-tests-with-generated-object-stream.patch
+# make qpdf working under FIPS, downstream patch
+Patch3:  qpdf-relax.patch
 
 # gcc and gcc-c++ are no longer in buildroot by default
 # gcc is needed for qpdf-ctest.c
@@ -24,10 +26,14 @@ BuildRequires: zlib-devel
 BuildRequires: libjpeg-turbo-devel
 BuildRequires: pcre-devel
 
+# for gnutls crypto
+BuildRequires: gnutls-devel
+
 # for fix-qdf and test suite
 BuildRequires: perl-interpreter
 BuildRequires: perl-generators
 BuildRequires: perl(Digest::MD5)
+BuildRequires: perl(Digest::SHA)
 
 # for autoreconf
 BuildRequires: autoconf
@@ -75,6 +81,7 @@ QPDF Manual
 %ifarch aarch64
 %patch2 -p1 -b .erase-tests-with-generated-object-stream
 %endif
+%patch3 -p1 -b .relax
 
 sed -i -e '1s,^#!/usr/bin/env perl,#!/usr/bin/perl,' qpdf/fix-qdf
 
@@ -86,6 +93,8 @@ autoreconf --verbose --force --install
 ./autogen.sh
 
 %configure --disable-static \
+           --enable-crypto-gnutls \
+           --disable-implicit-crypto \
            --enable-show-failed-test-output
 
 %make_build
@@ -109,8 +118,8 @@ make check
 %files libs
 %doc README.md TODO ChangeLog
 %license Artistic-2.0
-%{_libdir}/libqpdf.so.21
-%{_libdir}/libqpdf.so.21.4.2
+%{_libdir}/libqpdf.so.26
+%{_libdir}/libqpdf.so.26.1.0
 
 %files devel
 %doc examples/*.cc examples/*.c
@@ -123,6 +132,9 @@ make check
 
 
 %changelog
+* Tue Nov 19 2019 Zdenek Dohnal <zdohnal@redhat.com> - 9.1.0-1
+- 9.1.0
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 8.4.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 

@@ -1,6 +1,6 @@
-diff -up qpdf-8.1.0/examples/qtest/filter-tokens.test.erase-tests-with-generated-object-stream qpdf-8.1.0/examples/qtest/filter-tokens.test
---- qpdf-8.1.0/examples/qtest/filter-tokens.test.erase-tests-with-generated-object-stream	2018-06-26 16:25:29.028242814 +0200
-+++ qpdf-8.1.0/examples/qtest/filter-tokens.test	2018-06-26 16:27:17.456366872 +0200
+diff -up qpdf-9.0.1/examples/qtest/filter-tokens.test.erase-tests-with-generated-object-stream qpdf-9.0.1/examples/qtest/filter-tokens.test
+--- qpdf-9.0.1/examples/qtest/filter-tokens.test.erase-tests-with-generated-object-stream	2019-09-20 14:07:56.000000000 +0200
++++ qpdf-9.0.1/examples/qtest/filter-tokens.test	2019-10-03 08:05:23.809400490 +0200
 @@ -13,8 +13,4 @@ $td->runtest("filter tokens",
  	     {$td->COMMAND => "pdf-filter-tokens in.pdf a.pdf"},
  	     {$td->STRING => "", $td->EXIT_STATUS => 0});
@@ -11,9 +11,9 @@ diff -up qpdf-8.1.0/examples/qtest/filter-tokens.test.erase-tests-with-generated
 -
 -$td->report(2);
 +$td->report(1);
-diff -up qpdf-8.1.0/examples/qtest/invert-images.test.erase-tests-with-generated-object-stream qpdf-8.1.0/examples/qtest/invert-images.test
---- qpdf-8.1.0/examples/qtest/invert-images.test.erase-tests-with-generated-object-stream	2018-06-23 13:50:11.000000000 +0200
-+++ qpdf-8.1.0/examples/qtest/invert-images.test	2018-06-26 16:25:15.832347910 +0200
+diff -up qpdf-9.0.1/examples/qtest/invert-images.test.erase-tests-with-generated-object-stream qpdf-9.0.1/examples/qtest/invert-images.test
+--- qpdf-9.0.1/examples/qtest/invert-images.test.erase-tests-with-generated-object-stream	2019-09-20 14:07:56.000000000 +0200
++++ qpdf-9.0.1/examples/qtest/invert-images.test	2019-10-03 08:05:23.810400481 +0200
 @@ -19,13 +19,13 @@ $td->runtest("double page size",
  	      $td->EXIT_STATUS => 0},
  	     $td->NORMALIZE_NEWLINES);
@@ -32,9 +32,9 @@ diff -up qpdf-8.1.0/examples/qtest/invert-images.test.erase-tests-with-generated
  
  sub cleanup
  {
-diff -up qpdf-8.1.0/examples/qtest/set-form-values.test.erase-tests-with-generated-object-stream qpdf-8.1.0/examples/qtest/set-form-values.test
---- qpdf-8.1.0/examples/qtest/set-form-values.test.erase-tests-with-generated-object-stream	2018-06-26 16:25:24.971275053 +0200
-+++ qpdf-8.1.0/examples/qtest/set-form-values.test	2018-06-26 16:27:26.641291590 +0200
+diff -up qpdf-9.0.1/examples/qtest/set-form-values.test.erase-tests-with-generated-object-stream qpdf-9.0.1/examples/qtest/set-form-values.test
+--- qpdf-9.0.1/examples/qtest/set-form-values.test.erase-tests-with-generated-object-stream	2019-09-20 14:07:56.000000000 +0200
++++ qpdf-9.0.1/examples/qtest/set-form-values.test	2019-10-03 08:05:23.810400481 +0200
 @@ -14,13 +14,10 @@ cleanup();
  $td->runtest("set form values",
  	     {$td->COMMAND => "pdf-set-form-values form-in.pdf a.pdf soup"},
@@ -50,10 +50,10 @@ diff -up qpdf-8.1.0/examples/qtest/set-form-values.test.erase-tests-with-generat
  
  sub cleanup
  {
-diff -up qpdf-8.1.0/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream qpdf-8.1.0/libqpdf/qpdf-c.cc
---- qpdf-8.1.0/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream	2018-06-23 13:50:11.000000000 +0200
-+++ qpdf-8.1.0/libqpdf/qpdf-c.cc	2018-06-26 16:25:15.832347910 +0200
-@@ -302,7 +302,6 @@ QPDF_ERROR_CODE qpdf_read_memory(qpdf_da
+diff -up qpdf-9.0.1/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream qpdf-9.0.1/libqpdf/qpdf-c.cc
+--- qpdf-9.0.1/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream	2019-09-20 14:07:56.000000000 +0200
++++ qpdf-9.0.1/libqpdf/qpdf-c.cc	2019-10-03 08:05:23.811400473 +0200
+@@ -297,7 +297,6 @@ QPDF_ERROR_CODE qpdf_read_memory(qpdf_da
      qpdf->size = size;
      qpdf->password = password;
      status = trap_errors(qpdf, &call_read_memory);
@@ -61,7 +61,7 @@ diff -up qpdf-8.1.0/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream q
      return status;
  }
  
-@@ -515,7 +514,6 @@ unsigned char const* qpdf_get_buffer(qpd
+@@ -508,7 +507,6 @@ unsigned char const* qpdf_get_buffer(qpd
  
  void qpdf_set_object_stream_mode(qpdf_data qpdf, qpdf_object_stream_e mode)
  {
@@ -69,31 +69,31 @@ diff -up qpdf-8.1.0/libqpdf/qpdf-c.cc.erase-tests-with-generated-object-stream q
      qpdf->qpdf_writer->setObjectStreamMode(mode);
  }
  
-diff -up qpdf-8.1.0/libqpdf/QPDFWriter.cc.erase-tests-with-generated-object-stream qpdf-8.1.0/libqpdf/QPDFWriter.cc
---- qpdf-8.1.0/libqpdf/QPDFWriter.cc.erase-tests-with-generated-object-stream	2018-06-23 13:50:11.000000000 +0200
-+++ qpdf-8.1.0/libqpdf/QPDFWriter.cc	2018-06-26 16:25:15.833347901 +0200
-@@ -3221,8 +3221,6 @@ QPDFWriter::writeLinearized()
+diff -up qpdf-9.0.1/libqpdf/QPDFWriter.cc.erase-tests-with-generated-object-stream qpdf-9.0.1/libqpdf/QPDFWriter.cc
+--- qpdf-9.0.1/libqpdf/QPDFWriter.cc.erase-tests-with-generated-object-stream	2019-10-03 08:05:23.812400464 +0200
++++ qpdf-9.0.1/libqpdf/QPDFWriter.cc	2019-10-03 08:07:08.083488747 +0200
+@@ -3436,8 +3436,6 @@ QPDFWriter::writeLinearized()
  	{
              if (this->m->deterministic_id)
              {
 -                QTC::TC("qpdf", "QPDFWriter linearized deterministic ID",
 -                        need_xref_stream ? 0 : 1);
                  computeDeterministicIDData();
-                 popPipelineStack();
+                 pp_md5 = 0;
                  assert(this->m->md5_pipeline == 0);
-@@ -3426,8 +3424,6 @@ QPDFWriter::writeStandard()
+@@ -3645,8 +3643,6 @@ QPDFWriter::writeStandard()
  
      if (this->m->deterministic_id)
      {
 -	QTC::TC("qpdf", "QPDFWriter standard deterministic ID",
 -                this->m->object_stream_to_objects.empty() ? 0 : 1);
-         popPipelineStack();
+         pp_md5 = 0;
          assert(this->m->md5_pipeline == 0);
      }
-diff -up qpdf-8.1.0/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream qpdf-8.1.0/qpdf/qpdf.testcov
---- qpdf-8.1.0/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream	2018-06-23 13:50:11.000000000 +0200
-+++ qpdf-8.1.0/qpdf/qpdf.testcov	2018-06-26 16:25:15.833347901 +0200
-@@ -126,7 +126,6 @@ qpdf-c called qpdf_get_user_password 0
+diff -up qpdf-9.0.1/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream qpdf-9.0.1/qpdf/qpdf.testcov
+--- qpdf-9.0.1/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream	2019-09-20 14:07:56.000000000 +0200
++++ qpdf-9.0.1/qpdf/qpdf.testcov	2019-10-03 08:05:23.814400446 +0200
+@@ -123,7 +123,6 @@ qpdf-c called qpdf_get_user_password 0
  qpdf-c called qpdf_is_linearized 0
  qpdf-c called qpdf_is_encrypted 0
  qpdf-c called qpdf_init_write 3
@@ -101,7 +101,7 @@ diff -up qpdf-8.1.0/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream q
  qpdf-c called qpdf_set_stream_data_mode 0
  qpdf-c called qpdf_set_content_normalization 0
  qpdf-c called qpdf_set_qdf_mode 0
-@@ -180,7 +179,6 @@ QPDFObjectHandle append page contents 0
+@@ -177,7 +176,6 @@ QPDFObjectHandle append page contents 0
  QPDF_Stream getRawStreamData 0
  QPDF_Stream getStreamData 0
  QPDF_Stream expand filter abbreviation 0
@@ -109,7 +109,7 @@ diff -up qpdf-8.1.0/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream q
  QPDF stream without newline 0
  QPDF stream with CR only 0
  QPDF stream with CRNL 0
-@@ -264,8 +262,6 @@ qpdf pages range omitted at end 0
+@@ -261,8 +259,6 @@ qpdf pages range omitted at end 0
  qpdf pages range omitted in middle 0
  qpdf npages 0
  QPDF already reserved object 0
@@ -118,10 +118,10 @@ diff -up qpdf-8.1.0/qpdf/qpdf.testcov.erase-tests-with-generated-object-stream q
  QPDFWriter deterministic with no data 0
  qpdf-c called qpdf_set_deterministic_ID 0
  QPDFObjectHandle indirect with 0 objid 0
-diff -up qpdf-8.1.0/qpdf/qtest/qpdf.test.erase-tests-with-generated-object-stream qpdf-8.1.0/qpdf/qtest/qpdf.test
---- qpdf-8.1.0/qpdf/qtest/qpdf.test.erase-tests-with-generated-object-stream	2018-06-23 13:50:11.000000000 +0200
-+++ qpdf-8.1.0/qpdf/qtest/qpdf.test	2018-06-26 16:25:15.834347893 +0200
-@@ -1713,7 +1713,6 @@ my @capi = (
+diff -up qpdf-9.0.1/qpdf/qtest/qpdf.test.erase-tests-with-generated-object-stream qpdf-9.0.1/qpdf/qtest/qpdf.test
+--- qpdf-9.0.1/qpdf/qtest/qpdf.test.erase-tests-with-generated-object-stream	2019-09-20 14:07:56.000000000 +0200
++++ qpdf-9.0.1/qpdf/qtest/qpdf.test	2019-10-03 08:05:23.816400429 +0200
+@@ -2584,7 +2584,6 @@ my @capi = (
      [3, 'normalized content'],
      [4, 'ignore xref streams'],
      [5, 'linearized'],
@@ -129,7 +129,7 @@ diff -up qpdf-8.1.0/qpdf/qtest/qpdf.test.erase-tests-with-generated-object-strea
      [7, 'qdf'],
      [8, 'no original object ids'],
      [9, 'uncompressed streams'],
-@@ -1757,8 +1756,8 @@ $td->runtest("write damaged",
+@@ -2628,8 +2627,8 @@ $td->runtest("write damaged",
  show_ntests();
  # ----------
  $td->notify("--- Deterministic ID Tests ---");

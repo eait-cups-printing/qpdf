@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 9.1.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -30,10 +30,26 @@ BuildRequires: pcre-devel
 BuildRequires: gnutls-devel
 
 # for fix-qdf and test suite
-BuildRequires: perl-interpreter
 BuildRequires: perl-generators
+BuildRequires: perl-interpreter
+BuildRequires: perl(Carp)
+BuildRequires: perl(Config)
+BuildRequires: perl(constant)
+BuildRequires: perl(Cwd)
 BuildRequires: perl(Digest::MD5)
 BuildRequires: perl(Digest::SHA)
+BuildRequires: perl(File::Basename)
+BuildRequires: perl(File::Copy)
+BuildRequires: perl(File::Find)
+BuildRequires: perl(File::Spec)
+BuildRequires: perl(FileHandle)
+BuildRequires: perl(IO::Handle)
+BuildRequires: perl(IO::Select)
+BuildRequires: perl(IO::Socket)
+BuildRequires: perl(POSIX)
+BuildRequires: perl(strict)
+# perl(Term::ANSIColor) - not needed for tests
+# perl(Term::ReadKey) - not needed for tests
 
 # for autoreconf
 BuildRequires: autoconf
@@ -130,6 +146,9 @@ make check
 
 
 %changelog
+* Wed Mar 25 2020 Jitka Plesnikova <jplesnik@redhat.com> - 9.1.1-3
+- Add all perl dependencies for tests
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 9.1.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 

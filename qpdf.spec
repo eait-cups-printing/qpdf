@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.0.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -21,6 +21,8 @@ Patch3:  qpdf-relax.patch
 BuildRequires: gcc
 # gcc-c++ is need for everything except for qpdf-ctest
 BuildRequires: gcc-c++
+# uses make
+BuildRequires: make
 
 BuildRequires: zlib-devel
 BuildRequires: libjpeg-turbo-devel
@@ -146,6 +148,9 @@ make check
 
 
 %changelog
+* Thu Nov 05 2020 Zdenek Dohnal <zdohnal@redhat.com> - 10.0.3-2
+- make is no longer in buildroot by default
+
 * Mon Nov 02 2020 Zdenek Dohnal <zdohnal@redhat.com> - 10.0.3-1
 - 10.0.3
 

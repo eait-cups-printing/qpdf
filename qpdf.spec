@@ -1,6 +1,6 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 10.2.0
+Version: 10.3.0
 Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
@@ -135,7 +135,7 @@ make check
 %doc README.md TODO ChangeLog
 %license Artistic-2.0
 %{_libdir}/libqpdf.so.28
-%{_libdir}/libqpdf.so.28.2.0
+%{_libdir}/libqpdf.so.28.3.0
 
 %files devel
 %doc examples/*.cc examples/*.c
@@ -148,6 +148,9 @@ make check
 
 
 %changelog
+* Thu Mar 11 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.3.0-1
+- 1935799 - qpdf-10.3.0 is available
+
 * Wed Feb 24 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.2.0-1
 - 1932052 - qpdf-10.2.0 is available
 

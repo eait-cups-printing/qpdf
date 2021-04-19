@@ -12,6 +12,9 @@ Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.g
 Patch0:  qpdf-doc.patch
 # make qpdf working under FIPS, downstream patch
 Patch1:  qpdf-relax.patch
+# now we have s390x specific patch in zlib which changes output
+# so we need to disable one test because of it
+Patch2: qpdf-s390x-disable-streamtest.patch
 
 # gcc and gcc-c++ are no longer in buildroot by default
 # gcc is needed for qpdf-ctest.c
@@ -94,6 +97,9 @@ QPDF Manual
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
 %patch1 -p1 -b .relax
+%ifarch s390x
+%patch2 -p1 -b .s390x-disable-streamtest
+%endif
 
 %build
 # work-around check-rpaths errors
@@ -144,6 +150,7 @@ make check
 %changelog
 * Mon Apr 19 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.3.1-2
 - aarch64 specific patches were removed from zlib, so no need for ours
+- zlib got downstream patches on s390x, we need to patch qpdf test suite for it
 
 * Fri Mar 12 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.3.1-1
 - 1937988 - qpdf-10.3.1 is available

@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.3.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -10,11 +10,8 @@ URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
 Patch0:  qpdf-doc.patch
-# zlib has optimalization for aarch64 now, which gives different output after
-# compression - patch erases 3 tests with generated object stream which were failing
-Patch2:  qpdf-erase-tests-with-generated-object-stream.patch
 # make qpdf working under FIPS, downstream patch
-Patch3:  qpdf-relax.patch
+Patch1:  qpdf-relax.patch
 
 # gcc and gcc-c++ are no longer in buildroot by default
 # gcc is needed for qpdf-ctest.c
@@ -96,10 +93,7 @@ QPDF Manual
 
 # fix 'complete manual location' note in man pages
 %patch0 -p1 -b .doc
-%ifarch aarch64
-%patch2 -p1 -b .erase-tests-with-generated-object-stream
-%endif
-%patch3 -p1 -b .relax
+%patch1 -p1 -b .relax
 
 %build
 # work-around check-rpaths errors
@@ -148,6 +142,9 @@ make check
 
 
 %changelog
+* Mon Apr 19 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.3.1-2
+- aarch64 specific patches were removed from zlib, so no need for ours
+
 * Fri Mar 12 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.3.1-1
 - 1937988 - qpdf-10.3.1 is available
 

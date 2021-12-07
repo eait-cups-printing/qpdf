@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 10.3.2
-Release: 2%{?dist}
+Version: 10.4.0
+Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -135,7 +135,7 @@ make check
 %doc README.md TODO ChangeLog
 %license Artistic-2.0
 %{_libdir}/libqpdf.so.28
-%{_libdir}/libqpdf.so.28.3.2
+%{_libdir}/libqpdf.so.28.4.0
 
 %files devel
 %doc examples/*.cc examples/*.c
@@ -148,6 +148,9 @@ make check
 
 
 %changelog
+* Mon Dec 06 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.4.0-1
+- 2023979 - qpdf-10.4.0 is available
+
 * Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 10.3.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 

@@ -1,6 +1,6 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
-Version: 10.4.0
+Version: 10.5.0
 Release: 1%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
@@ -9,7 +9,6 @@ License: (Artistic 2.0 or ASL 2.0) and MIT
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
 
-Patch0:  qpdf-doc.patch
 # make qpdf working under FIPS, downstream patch
 Patch1:  qpdf-relax.patch
 # now we have s390x specific patch in zlib which changes output
@@ -94,8 +93,6 @@ QPDF Manual
 %prep
 %setup -q
 
-# fix 'complete manual location' note in man pages
-%patch0 -p1 -b .doc
 %patch1 -p1 -b .relax
 %ifarch s390x
 %patch2 -p1 -b .s390x-disable-streamtest
@@ -135,7 +132,7 @@ make check
 %doc README.md TODO ChangeLog
 %license Artistic-2.0
 %{_libdir}/libqpdf.so.28
-%{_libdir}/libqpdf.so.28.4.0
+%{_libdir}/libqpdf.so.28.5.0
 
 %files devel
 %doc examples/*.cc examples/*.c
@@ -148,6 +145,9 @@ make check
 
 
 %changelog
+* Mon Jan 03 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.5.0-1
+- 2034671 - qpdf-10.5.0 is available
+
 * Mon Dec 06 2021 Zdenek Dohnal <zdohnal@redhat.com> - 10.4.0-1
 - 2023979 - qpdf-10.4.0 is available
 

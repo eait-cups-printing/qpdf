@@ -1,13 +1,14 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.5.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
 License: (Artistic 2.0 or ASL 2.0) and MIT
 URL:     http://qpdf.sourceforge.net/
-Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%{version}.tar.gz
+Source0: http://downloads.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
+Source1: http://downloads.sourceforge.net/sourceforge/%{name}/%{name}-%{version}-doc.zip
 
 # make qpdf working under FIPS, downstream patch
 Patch1:  qpdf-relax.patch
@@ -69,6 +70,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 %package doc
 Summary: QPDF Manual
 BuildArch: noarch
+BuildRequires: unzip
 Requires: %{name}-libs = %{version}-%{release}
 
 %description
@@ -98,6 +100,10 @@ QPDF Manual
 %patch2 -p1 -b .s390x-disable-streamtest
 %endif
 
+# unpack zip file with manual
+unzip %{SOURCE1}
+
+
 %build
 # work-around check-rpaths errors
 autoreconf --verbose --force --install
@@ -115,7 +121,10 @@ autoreconf --verbose --force --install
 %install
 %make_install
 
+install -m 0644 %{name}-%{version}-doc/%{name}-manual.pdf %{buildroot}/%{_pkgdocdir}/%{name}-manual.pdf
+
 rm -f %{buildroot}%{_libdir}/libqpdf.la
+
 
 %check
 make check
@@ -145,6 +154,9 @@ make check
 
 
 %changelog
+* Wed Jan 05 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.5.0-2
+- add qpdf-manual - now it is in a different archive
+
 * Mon Jan 03 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.5.0-1
 - 2034671 - qpdf-10.5.0 is available
 

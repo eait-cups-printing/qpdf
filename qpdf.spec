@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.6.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -154,6 +154,9 @@ make check
 
 
 %changelog
+* Thu Jul 14 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.6.3-2
+- 2107240 - FIPS breaks pdftopdf and bannertopdf
+
 * Fri Mar 18 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.6.3-1
 - 2063429 - qpdf-10.6.3 is available
 

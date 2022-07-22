@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.6.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -154,6 +154,9 @@ make check
 
 
 %changelog
+* Fri Jul 22 2022 Fedora Release Engineering <releng@fedoraproject.org> - 10.6.3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
 * Thu Jul 14 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.6.3-2
 - 2107240 - FIPS breaks pdftopdf and bannertopdf
 

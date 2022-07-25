@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.6.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -26,7 +26,6 @@ BuildRequires: make
 
 BuildRequires: zlib-devel
 BuildRequires: libjpeg-turbo-devel
-BuildRequires: pcre-devel
 
 # for gnutls crypto
 BuildRequires: gnutls-devel
@@ -154,6 +153,9 @@ make check
 
 
 %changelog
+* Mon Jul 25 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.6.3-4
+- qpdf doesn't depend on pcre since 7.0b1
+
 * Fri Jul 22 2022 Fedora Release Engineering <releng@fedoraproject.org> - 10.6.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 

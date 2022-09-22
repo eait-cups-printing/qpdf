@@ -1,7 +1,8 @@
-diff -up qpdf-10.4.0/libqpdf/QPDFWriter.cc.s390x-disable-streamtest qpdf-10.4.0/libqpdf/QPDFWriter.cc
---- qpdf-10.4.0/libqpdf/QPDFWriter.cc.s390x-disable-streamtest	2021-12-06 12:53:11.625309618 +0100
-+++ qpdf-10.4.0/libqpdf/QPDFWriter.cc	2021-12-06 12:53:11.627309604 +0100
-@@ -2096,7 +2096,6 @@ QPDFWriter::writeObjectStream(QPDFObject
+diff --git a/libqpdf/QPDFWriter.cc b/libqpdf/QPDFWriter.cc
+index ab02371..ce5f7ff 100644
+--- a/libqpdf/QPDFWriter.cc
++++ b/libqpdf/QPDFWriter.cc
+@@ -1926,7 +1926,6 @@ QPDFWriter::writeObjectStream(QPDFObjectHandle object)
                  // This condition occurred in a fuzz input. Ideally we
                  // should block it at at parse time, but it's not
                  // clear to me how to construct a case for this.
@@ -9,25 +10,27 @@ diff -up qpdf-10.4.0/libqpdf/QPDFWriter.cc.s390x-disable-streamtest qpdf-10.4.0/
                  obj_to_write.warnIfPossible(
                      "stream found inside object stream; treating as null");
                  obj_to_write = QPDFObjectHandle::newNull();
-diff -up qpdf-10.4.0/qpdf/qpdf.testcov.s390x-disable-streamtest qpdf-10.4.0/qpdf/qpdf.testcov
---- qpdf-10.4.0/qpdf/qpdf.testcov.s390x-disable-streamtest	2021-11-16 21:44:09.000000000 +0100
-+++ qpdf-10.4.0/qpdf/qpdf.testcov	2021-12-06 12:53:11.628309596 +0100
-@@ -442,7 +442,6 @@ QPDF xref skipped space 0
+diff --git a/qpdf/qpdf.testcov b/qpdf/qpdf.testcov
+index e89f63a..6e3582c 100644
+--- a/qpdf/qpdf.testcov
++++ b/qpdf/qpdf.testcov
+@@ -427,7 +427,6 @@ QPDF xref skipped space 0
  QPDF eof skipping spaces before xref 1
  QPDF_encryption user matches owner V < 5 0
  QPDF_encryption same password 1
 -QPDFWriter stream in ostream 0
- QPDFObjectHandle duplicate dict key 0
+ QPDFParser duplicate dict key 0
  QPDFWriter no encryption sig contents 0
  QPDFPageObjectHelper colorspace lookup 0
-diff -up qpdf-10.4.0/qpdf/qtest/qpdf.test.s390x-disable-streamtest qpdf-10.4.0/qpdf/qtest/qpdf.test
---- qpdf-10.4.0/qpdf/qtest/qpdf.test.s390x-disable-streamtest	2021-12-06 12:53:11.628309596 +0100
-+++ qpdf-10.4.0/qpdf/qtest/qpdf.test	2021-12-06 12:54:45.351620347 +0100
-@@ -1024,7 +1024,6 @@ my @bug_tests = (
+diff --git a/qpdf/qtest/specific-bugs.test b/qpdf/qtest/specific-bugs.test
+index 326b3e9..f9665cb 100644
+--- a/qpdf/qtest/specific-bugs.test
++++ b/qpdf/qtest/specific-bugs.test
+@@ -38,7 +38,6 @@ my @bug_tests = (
      ["263", "empty xref stream", 2],
      ["335a", "ozz-fuzz-12152", 2],
      ["335b", "ozz-fuzz-14845", 2],
 -    ["fuzz-16214", "stream in object stream", 3, "--preserve-unreferenced"],
-     # When adding to this list, consider adding to CORPUS_FROM_TEST
-     # in fuzz/build.mk and updating the count in fuzz/qtest/fuzz.test.
-     );
+     # When adding to this list, consider adding to CORPUS_FROM_TEST in
+     # fuzz/CMakeLists.txt and updating the count in
+     # fuzz/qtest/fuzz.test.

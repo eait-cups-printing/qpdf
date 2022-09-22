@@ -1,7 +1,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.6.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -15,6 +15,9 @@ Patch1:  qpdf-relax.patch
 # now we have s390x specific patch in zlib which changes output
 # so we need to disable one test because of it
 Patch2: qpdf-s390x-disable-streamtest.patch
+# egrep now shows warning, which causes test failure. Move to `grep -E`
+# https://github.com/qpdf/qpdf/commit/7049588bff21e3ea3e7bf3c4a4325c8ab4ed46f8
+Patch3: 0001-Fix-tests-with-GNU-grep-3.8.patch
 
 # gcc and gcc-c++ are no longer in buildroot by default
 # gcc is needed for qpdf-ctest.c
@@ -98,6 +101,7 @@ QPDF Manual
 %ifarch s390x
 %patch2 -p1 -b .s390x-disable-streamtest
 %endif
+%patch3 -p1 -b .use-grepe
 
 # unpack zip file with manual
 unzip %{SOURCE1}
@@ -153,6 +157,9 @@ make check
 
 
 %changelog
+* Thu Sep 22 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.6.3-5
+- use `grep -E` in test suite (bz2127957)
+
 * Mon Jul 25 2022 Zdenek Dohnal <zdohnal@redhat.com> - 10.6.3-4
 - qpdf doesn't depend on pcre since 7.0b1
 

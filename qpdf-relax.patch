@@ -1,7 +1,6 @@
-diff --git a/libqpdf/QPDF.cc b/libqpdf/QPDF.cc
-index dd6037c..2a26a85 100644
---- a/libqpdf/QPDF.cc
-+++ b/libqpdf/QPDF.cc
+diff -up qpdf-11.1.1/libqpdf/QPDF.cc.relax qpdf-11.1.1/libqpdf/QPDF.cc
+--- qpdf-11.1.1/libqpdf/QPDF.cc.relax	2022-10-01 18:04:50.000000000 +0200
++++ qpdf-11.1.1/libqpdf/QPDF.cc	2022-10-13 07:13:29.024092866 +0200
 @@ -13,6 +13,10 @@
  #include <string.h>
  #include <vector>
@@ -13,7 +12,7 @@ index dd6037c..2a26a85 100644
  #include <qpdf/BufferInputSource.hh>
  #include <qpdf/FileInputSource.hh>
  #include <qpdf/OffsetInputSource.hh>
-@@ -279,7 +283,13 @@ void
+@@ -280,7 +284,13 @@ void
  QPDF::processFile(char const* filename, char const* password)
  {
      FileInputSource* fi = new FileInputSource(filename);
@@ -27,7 +26,7 @@ index dd6037c..2a26a85 100644
  }
  
  void
-@@ -287,7 +297,13 @@ QPDF::processFile(
+@@ -288,7 +298,13 @@ QPDF::processFile(
      char const* description, FILE* filep, bool close_file, char const* password)
  {
      FileInputSource* fi = new FileInputSource(description, filep, close_file);
@@ -41,77 +40,9 @@ index dd6037c..2a26a85 100644
  }
  
  void
-diff --git a/libqpdf/QPDFWriter.cc b/libqpdf/QPDFWriter.cc
-index aad536b..ab02371 100644
---- a/libqpdf/QPDFWriter.cc
-+++ b/libqpdf/QPDFWriter.cc
-@@ -25,6 +25,10 @@
- #include <algorithm>
- #include <stdlib.h>
- 
-+#ifdef USE_CRYPTO_GNUTLS
-+#include <gnutls/crypto.h>
-+#endif
-+
- QPDFWriter::ProgressReporter::~ProgressReporter()
- {
-     // Must be explicit and not inline -- see QPDF_DLL_CLASS in
-@@ -342,6 +346,13 @@ void
- QPDFWriter::setDeterministicID(bool val)
- {
-     this->m->deterministic_id = val;
-+
-+#ifdef USE_CRYPTO_GNUTLS
-+    if (val)
-+	GNUTLS_FIPS140_SET_LAX_MODE();
-+    else
-+	GNUTLS_FIPS140_SET_STRICT_MODE();
-+#endif
- }
- 
- void
-@@ -362,6 +373,13 @@ void
- QPDFWriter::setPreserveEncryption(bool val)
- {
-     this->m->preserve_encryption = val;
-+
-+#ifdef USE_CRYPTO_GNUTLS
-+    if (val)
-+	GNUTLS_FIPS140_SET_STRICT_MODE();
-+    else
-+	GNUTLS_FIPS140_SET_LAX_MODE();
-+#endif
- }
- 
- void
-@@ -2109,12 +2127,23 @@ QPDFWriter::generateID()
-             }
-         }
- 
-+#ifdef USE_CRYPTO_GNUTLS
-+        unsigned oldmode = gnutls_fips140_mode_enabled();
-+
-+        gnutls_fips140_set_mode(GNUTLS_FIPS140_LAX, GNUTLS_FIPS140_SET_MODE_THREAD);
-+#endif
-+
-         MD5 m;
-         m.encodeString(seed.c_str());
-         MD5::Digest digest;
-         m.digest(digest);
-         result =
-             std::string(reinterpret_cast<char*>(digest), sizeof(MD5::Digest));
-+
-+#ifdef USE_CRYPTO_GNUTLS
-+        gnutls_fips140_set_mode(static_cast<gnutls_fips_mode_t>(oldmode), GNUTLS_FIPS140_SET_MODE_THREAD);
-+#endif
-+
-     }
- 
-     // If /ID already exists, follow the spec: use the original first
-diff --git a/libqpdf/QPDF_encryption.cc b/libqpdf/QPDF_encryption.cc
-index 266907a..658a353 100644
---- a/libqpdf/QPDF_encryption.cc
-+++ b/libqpdf/QPDF_encryption.cc
+diff -up qpdf-11.1.1/libqpdf/QPDF_encryption.cc.relax qpdf-11.1.1/libqpdf/QPDF_encryption.cc
+--- qpdf-11.1.1/libqpdf/QPDF_encryption.cc.relax	2022-10-01 18:04:50.000000000 +0200
++++ qpdf-11.1.1/libqpdf/QPDF_encryption.cc	2022-10-13 07:15:03.470151572 +0200
 @@ -3,6 +3,8 @@
  
  #include <qpdf/assert_debug.h>
@@ -154,7 +85,7 @@ index 266907a..658a353 100644
      return std::string(
          reinterpret_cast<char*>(digest), std::min(result.length(), toS(16)));
  }
-@@ -1100,6 +1117,12 @@ QPDF::getKeyForObject(
+@@ -1076,6 +1093,12 @@ QPDF::getKeyForObject(
  void
  QPDF::decryptString(std::string& str, QPDFObjGen const& og)
  {
@@ -167,9 +98,9 @@ index 266907a..658a353 100644
      if (!og.isIndirect()) {
          return;
      }
-@@ -1174,6 +1197,10 @@ QPDF::decryptString(std::string& str, QPDFObjGen const& og)
+@@ -1142,6 +1165,10 @@ QPDF::decryptString(std::string& str, QP
              "error decrypting string for object " + og.unparse() + ": " +
-                 e.what());
+             e.what());
      }
 +
 +#ifdef USE_CRYPTO_GNUTLS
@@ -178,7 +109,7 @@ index 266907a..658a353 100644
  }
  
  void
-@@ -1186,6 +1213,12 @@ QPDF::decryptStream(
+@@ -1154,6 +1181,12 @@ QPDF::decryptStream(
      QPDFObjectHandle& stream_dict,
      std::vector<std::shared_ptr<Pipeline>>& heap)
  {
@@ -191,7 +122,7 @@ index 266907a..658a353 100644
      std::string type;
      if (stream_dict.getKey("/Type").isName()) {
          type = stream_dict.getKey("/Type").getName();
-@@ -1297,6 +1330,10 @@ QPDF::decryptStream(
+@@ -1262,6 +1295,10 @@ QPDF::decryptStream(
      }
      pipeline = new_pipeline.get();
      heap.push_back(new_pipeline);
@@ -202,3 +133,69 @@ index 266907a..658a353 100644
  }
  
  void
+diff -up qpdf-11.1.1/libqpdf/QPDFWriter.cc.relax qpdf-11.1.1/libqpdf/QPDFWriter.cc
+--- qpdf-11.1.1/libqpdf/QPDFWriter.cc.relax	2022-10-01 18:04:50.000000000 +0200
++++ qpdf-11.1.1/libqpdf/QPDFWriter.cc	2022-10-13 07:13:29.025092856 +0200
+@@ -25,6 +25,10 @@
+ #include <algorithm>
+ #include <stdlib.h>
+ 
++#ifdef USE_CRYPTO_GNUTLS
++#include <gnutls/crypto.h>
++#endif
++
+ QPDFWriter::ProgressReporter::~ProgressReporter()
+ {
+     // Must be explicit and not inline -- see QPDF_DLL_CLASS in
+@@ -342,6 +346,13 @@ void
+ QPDFWriter::setDeterministicID(bool val)
+ {
+     this->m->deterministic_id = val;
++
++#ifdef USE_CRYPTO_GNUTLS
++    if (val)
++	GNUTLS_FIPS140_SET_LAX_MODE();
++    else
++	GNUTLS_FIPS140_SET_STRICT_MODE();
++#endif
+ }
+ 
+ void
+@@ -362,6 +373,13 @@ void
+ QPDFWriter::setPreserveEncryption(bool val)
+ {
+     this->m->preserve_encryption = val;
++
++#ifdef USE_CRYPTO_GNUTLS
++    if (val)
++	GNUTLS_FIPS140_SET_STRICT_MODE();
++    else
++	GNUTLS_FIPS140_SET_LAX_MODE();
++#endif
+ }
+ 
+ void
+@@ -2101,12 +2119,23 @@ QPDFWriter::generateID()
+             }
+         }
+ 
++#ifdef USE_CRYPTO_GNUTLS
++        unsigned oldmode = gnutls_fips140_mode_enabled();
++
++        gnutls_fips140_set_mode(GNUTLS_FIPS140_LAX, GNUTLS_FIPS140_SET_MODE_THREAD);
++#endif
++
+         MD5 m;
+         m.encodeString(seed.c_str());
+         MD5::Digest digest;
+         m.digest(digest);
+         result =
+             std::string(reinterpret_cast<char*>(digest), sizeof(MD5::Digest));
++
++#ifdef USE_CRYPTO_GNUTLS
++        gnutls_fips140_set_mode(static_cast<gnutls_fips_mode_t>(oldmode), GNUTLS_FIPS140_SET_MODE_THREAD);
++#endif
++
+     }
+ 
+     // If /ID already exists, follow the spec: use the original first

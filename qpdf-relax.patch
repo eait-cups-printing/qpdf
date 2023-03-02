@@ -1,6 +1,6 @@
-diff -up qpdf-11.1.1/libqpdf/QPDF.cc.relax qpdf-11.1.1/libqpdf/QPDF.cc
---- qpdf-11.1.1/libqpdf/QPDF.cc.relax	2022-10-01 18:04:50.000000000 +0200
-+++ qpdf-11.1.1/libqpdf/QPDF.cc	2022-10-13 07:13:29.024092866 +0200
+diff -up qpdf-11.3.0/libqpdf/QPDF.cc.relax qpdf-11.3.0/libqpdf/QPDF.cc
+--- qpdf-11.3.0/libqpdf/QPDF.cc.relax	2023-02-25 22:24:41.000000000 +0100
++++ qpdf-11.3.0/libqpdf/QPDF.cc	2023-03-02 08:19:28.200881077 +0100
 @@ -13,6 +13,10 @@
  #include <string.h>
  #include <vector>
@@ -12,7 +12,7 @@ diff -up qpdf-11.1.1/libqpdf/QPDF.cc.relax qpdf-11.1.1/libqpdf/QPDF.cc
  #include <qpdf/BufferInputSource.hh>
  #include <qpdf/FileInputSource.hh>
  #include <qpdf/OffsetInputSource.hh>
-@@ -280,7 +284,13 @@ void
+@@ -264,7 +268,13 @@ void
  QPDF::processFile(char const* filename, char const* password)
  {
      FileInputSource* fi = new FileInputSource(filename);
@@ -26,7 +26,7 @@ diff -up qpdf-11.1.1/libqpdf/QPDF.cc.relax qpdf-11.1.1/libqpdf/QPDF.cc
  }
  
  void
-@@ -288,7 +298,13 @@ QPDF::processFile(
+@@ -272,7 +282,13 @@ QPDF::processFile(
      char const* description, FILE* filep, bool close_file, char const* password)
  {
      FileInputSource* fi = new FileInputSource(description, filep, close_file);
@@ -40,9 +40,9 @@ diff -up qpdf-11.1.1/libqpdf/QPDF.cc.relax qpdf-11.1.1/libqpdf/QPDF.cc
  }
  
  void
-diff -up qpdf-11.1.1/libqpdf/QPDF_encryption.cc.relax qpdf-11.1.1/libqpdf/QPDF_encryption.cc
---- qpdf-11.1.1/libqpdf/QPDF_encryption.cc.relax	2022-10-01 18:04:50.000000000 +0200
-+++ qpdf-11.1.1/libqpdf/QPDF_encryption.cc	2022-10-13 07:15:03.470151572 +0200
+diff -up qpdf-11.3.0/libqpdf/QPDF_encryption.cc.relax qpdf-11.3.0/libqpdf/QPDF_encryption.cc
+--- qpdf-11.3.0/libqpdf/QPDF_encryption.cc.relax	2023-02-25 22:24:41.000000000 +0100
++++ qpdf-11.3.0/libqpdf/QPDF_encryption.cc	2023-03-02 08:19:28.200881077 +0100
 @@ -3,6 +3,8 @@
  
  #include <qpdf/assert_debug.h>
@@ -133,11 +133,11 @@ diff -up qpdf-11.1.1/libqpdf/QPDF_encryption.cc.relax qpdf-11.1.1/libqpdf/QPDF_e
  }
  
  void
-diff -up qpdf-11.1.1/libqpdf/QPDFWriter.cc.relax qpdf-11.1.1/libqpdf/QPDFWriter.cc
---- qpdf-11.1.1/libqpdf/QPDFWriter.cc.relax	2022-10-01 18:04:50.000000000 +0200
-+++ qpdf-11.1.1/libqpdf/QPDFWriter.cc	2022-10-13 07:13:29.025092856 +0200
-@@ -25,6 +25,10 @@
- #include <algorithm>
+diff -up qpdf-11.3.0/libqpdf/QPDFWriter.cc.relax qpdf-11.3.0/libqpdf/QPDFWriter.cc
+--- qpdf-11.3.0/libqpdf/QPDFWriter.cc.relax	2023-02-25 22:24:41.000000000 +0100
++++ qpdf-11.3.0/libqpdf/QPDFWriter.cc	2023-03-02 08:56:48.559215611 +0100
+@@ -26,6 +26,10 @@
+ #include <stdexcept>
  #include <stdlib.h>
  
 +#ifdef USE_CRYPTO_GNUTLS
@@ -147,7 +147,7 @@ diff -up qpdf-11.1.1/libqpdf/QPDFWriter.cc.relax qpdf-11.1.1/libqpdf/QPDFWriter.
  QPDFWriter::ProgressReporter::~ProgressReporter()
  {
      // Must be explicit and not inline -- see QPDF_DLL_CLASS in
-@@ -342,6 +346,13 @@ void
+@@ -343,6 +347,13 @@ void
  QPDFWriter::setDeterministicID(bool val)
  {
      this->m->deterministic_id = val;
@@ -161,7 +161,7 @@ diff -up qpdf-11.1.1/libqpdf/QPDFWriter.cc.relax qpdf-11.1.1/libqpdf/QPDFWriter.
  }
  
  void
-@@ -362,6 +373,13 @@ void
+@@ -363,6 +374,13 @@ void
  QPDFWriter::setPreserveEncryption(bool val)
  {
      this->m->preserve_encryption = val;
@@ -175,7 +175,7 @@ diff -up qpdf-11.1.1/libqpdf/QPDFWriter.cc.relax qpdf-11.1.1/libqpdf/QPDFWriter.
  }
  
  void
-@@ -2101,12 +2119,23 @@ QPDFWriter::generateID()
+@@ -2100,12 +2118,23 @@ QPDFWriter::generateID()
              }
          }
  

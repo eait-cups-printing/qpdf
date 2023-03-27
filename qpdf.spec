@@ -5,7 +5,7 @@ Release: 2%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
-License: (Artistic 2.0 or ASL 2.0) and MIT
+License: Apache-2.0 OR Artistic-2.0
 URL:     http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tar.gz
 Source1: http://downloads.sourceforge.net/sourceforge/%{name}/%{name}-%{version}-doc.zip

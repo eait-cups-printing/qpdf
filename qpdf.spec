@@ -90,9 +90,9 @@ QPDF Manual
 %prep
 %setup -q
 
-%patch1 -p1 -b .relax
+%patch 1 -p1 -b .relax
 %ifarch s390x
-%patch2 -p1 -b .s390x-disable-streamtest
+%patch 2 -p1 -b .s390x-disable-streamtest
 %endif
 
 # unpack zip file with manual

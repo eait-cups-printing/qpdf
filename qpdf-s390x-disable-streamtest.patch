@@ -1,17 +1,17 @@
-diff -up qpdf-11.4.0/libqpdf/QPDFWriter.cc.s390x-disable-streamtest qpdf-11.4.0/libqpdf/QPDFWriter.cc
---- qpdf-11.4.0/libqpdf/QPDFWriter.cc.s390x-disable-streamtest	2023-05-22 17:39:20.908097940 +0200
-+++ qpdf-11.4.0/libqpdf/QPDFWriter.cc	2023-05-22 17:40:22.782510735 +0200
-@@ -1763,7 +1763,6 @@ QPDFWriter::writeObjectStream(QPDFObject
-                 // This condition occurred in a fuzz input. Ideally we
-                 // should block it at at parse time, but it's not
-                 // clear to me how to construct a case for this.
+diff -up qpdf-11.5.0/libqpdf/QPDFWriter.cc.s390x-disable-streamtest qpdf-11.5.0/libqpdf/QPDFWriter.cc
+--- qpdf-11.5.0/libqpdf/QPDFWriter.cc.s390x-disable-streamtest	2023-07-26 09:11:48.611267435 +0200
++++ qpdf-11.5.0/libqpdf/QPDFWriter.cc	2023-07-26 09:12:55.743716337 +0200
+@@ -1722,7 +1722,6 @@ QPDFWriter::writeObjectStream(QPDFObject
+             if (obj_to_write.isStream()) {
+                 // This condition occurred in a fuzz input. Ideally we should block it at parse
+                 // time, but it's not clear to me how to construct a case for this.
 -                QTC::TC("qpdf", "QPDFWriter stream in ostream");
                  obj_to_write.warnIfPossible("stream found inside object stream; treating as null");
                  obj_to_write = QPDFObjectHandle::newNull();
              }
-diff -up qpdf-11.4.0/qpdf/qpdf.testcov.s390x-disable-streamtest qpdf-11.4.0/qpdf/qpdf.testcov
---- qpdf-11.4.0/qpdf/qpdf.testcov.s390x-disable-streamtest	2023-05-21 20:42:37.000000000 +0200
-+++ qpdf-11.4.0/qpdf/qpdf.testcov	2023-05-22 17:39:20.908097940 +0200
+diff -up qpdf-11.5.0/qpdf/qpdf.testcov.s390x-disable-streamtest qpdf-11.5.0/qpdf/qpdf.testcov
+--- qpdf-11.5.0/qpdf/qpdf.testcov.s390x-disable-streamtest	2023-07-09 16:00:51.000000000 +0200
++++ qpdf-11.5.0/qpdf/qpdf.testcov	2023-07-26 09:11:48.611267435 +0200
 @@ -428,7 +428,6 @@ QPDF xref skipped space 0
  QPDF eof skipping spaces before xref 1
  QPDF_encryption user matches owner V < 5 0
@@ -20,9 +20,9 @@ diff -up qpdf-11.4.0/qpdf/qpdf.testcov.s390x-disable-streamtest qpdf-11.4.0/qpdf
  QPDFParser duplicate dict key 0
  QPDFWriter no encryption sig contents 0
  QPDFPageObjectHelper colorspace lookup 0
-diff -up qpdf-11.4.0/qpdf/qtest/specific-bugs.test.s390x-disable-streamtest qpdf-11.4.0/qpdf/qtest/specific-bugs.test
---- qpdf-11.4.0/qpdf/qtest/specific-bugs.test.s390x-disable-streamtest	2023-05-21 20:42:37.000000000 +0200
-+++ qpdf-11.4.0/qpdf/qtest/specific-bugs.test	2023-05-22 17:39:20.908097940 +0200
+diff -up qpdf-11.5.0/qpdf/qtest/specific-bugs.test.s390x-disable-streamtest qpdf-11.5.0/qpdf/qtest/specific-bugs.test
+--- qpdf-11.5.0/qpdf/qtest/specific-bugs.test.s390x-disable-streamtest	2023-07-09 16:00:51.000000000 +0200
++++ qpdf-11.5.0/qpdf/qtest/specific-bugs.test	2023-07-26 09:11:48.611267435 +0200
 @@ -38,7 +38,6 @@ my @bug_tests = (
      ["263", "empty xref stream", 2],
      ["335a", "ozz-fuzz-12152", 2],

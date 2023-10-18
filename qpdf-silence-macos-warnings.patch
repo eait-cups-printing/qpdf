@@ -1,0 +1,48 @@
+diff --git a/libqpdf/QPDF.cc b/libqpdf/QPDF.cc
+index 473cf5f0..3fbe5943 100644
+--- a/libqpdf/QPDF.cc
++++ b/libqpdf/QPDF.cc
+@@ -529,11 +529,11 @@ QPDF::reconstruct_xref(QPDFExc& e)
+     m->reconstructed_xref = true;
+     // We may find more objects, which may contain dangling references.
+     m->fixed_dangling_refs = false;
+-
++/*
+     warn(damagedPDF("", 0, "file is damaged"));
+     warn(e);
+     warn(damagedPDF("", 0, "Attempting to reconstruct cross-reference table"));
+-
++*/
+     // Delete all references to type 1 (uncompressed) objects
+     std::set<QPDFObjGen> to_delete;
+     for (auto const& iter: m->xref_table) {
+@@ -1526,12 +1526,12 @@ QPDF::readObjectAtOffset(
+     // "Mac OS X 10.7.5 Quartz PDFContext", may store deleted objects in the xref table as
+     // "0000000000 00000 n", which is not correct, but it won't hurt anything for us to ignore
+     // these.
+-    if (offset == 0) {
++/*    if (offset == 0) {
+         QTC::TC("qpdf", "QPDF bogus 0 offset", 0);
+         warn(damagedPDF(0, "object has offset 0"));
+         return QPDFObjectHandle::newNull();
+     }
+-
++*/
+     m->file->seek(offset, SEEK_SET);
+ 
+     QPDFTokenizer::Token tobjid = readToken(m->file);
+@@ -1581,12 +1581,12 @@ QPDF::readObjectAtOffset(
+                 return result;
+             } else {
+                 QTC::TC("qpdf", "QPDF object gone after xref reconstruction");
+-                warn(damagedPDF(
++/*                warn(damagedPDF(
+                     "",
+                     0,
+                     ("object " + exp_og.unparse(' ') +
+                      " not found in file after regenerating cross reference "
+-                     "table")));
++                     "table"))); */
+                 return QPDFObjectHandle::newNull();
+             }
+         } else {

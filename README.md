@@ -3,12 +3,13 @@ VCS CUPS repository for :
 * https://copr.fedorainfracloud.org/coprs/dkosovic/printing-el8/
 * https://copr.fedorainfracloud.org/coprs/dkosovic/printing-el9/
 
-This respository started of as a git clone of the rawhide branch of qpdf
-from Fedora Package Sources:
+This repository started off as a git clone of the rawhide branch of qpdf from
+Fedora Package Sources:
 * https://src.fedoraproject.org/rpms/qpdf/tree/rawhide
 
-This repository contains a workaround patch for a QPDF bogus offset 0 warning
-that becomes an error in pdftopdf filter, see:
+This repository contains a patch to silence QPDF warnings with
+macOS CUPS clients that can become errors, see following for more
+details of the issue:
 * https://github.com/OpenPrinting/cups/issues/321
 
 ### Building on Fedora Copr
